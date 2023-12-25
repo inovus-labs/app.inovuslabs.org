@@ -1,21 +1,35 @@
 
 <template>
+    <section class="bg-white dark:bg-gray-900">
 
-    <section class="bg-bgPrimary p-4 h-screen w-screen flex flex-col justify-center items-center">
-        <div class="text-2xl font-semibold mx-auto max-w-7xl text-center">
+        <Navbar />
 
-            <p class="text-primary">Message from DashboardLayout...</p>
+        <Sidebar />
+
+        <main class="p-4 md:ml-72 h-auto pt-24">
+
             <slot />
 
-        </div>
-    </section>
+        </main>
 
+    </section>
 </template>
 
 <script>
+    import Navbar from '@/components/Navbar.vue';
+    import Sidebar from '@/components/Sidebar.vue';
+
     export default {
         name: 'DashboardLayout',
+        components: { 
+            Navbar,
+            Sidebar
+        },
     }
 </script>
 
-<style lang="scss"></style>
+<style>
+    ::-webkit-scrollbar {
+        display: none;
+    }
+</style>

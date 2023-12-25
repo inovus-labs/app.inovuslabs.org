@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        bgPrimary: '#E7FFE6', // background primary
+        bgPrimary: '#F3F4F6', // background primary
         bgSecondary: '#DADBDD', // background secondary
-        primary: '#92E3A9', // button color / icon hover
+        primary: '#4ca3ff', // button color / icon hover
         secondary: '#263238', // button color / icon hover
         tertiary: '#A3A3A3', // button color / icon hover
         border: '#484848', // border / line color
