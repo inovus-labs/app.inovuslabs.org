@@ -1,30 +1,30 @@
 
 <template>
-  <DashboardLayout>
+    <DashboardLayout>
+  
+      <ListingTable
+        :items="projects"
+        :fields="fields"
+      />
 
-    <ListingTable
-      :items="items"
-      :fields="fields"
-    />
-
-  </DashboardLayout>
+    </DashboardLayout>
 </template>
 
 <script>
   import DashboardLayout from '@/layouts/DashboardLayout.vue'
   import ListingTable from '@/components/ListingTable.vue'
 
-  import { getActivity } from '@/API/index.js'
+  import { getProjects } from '@/API/index.js'
 
   export default {
-    name: 'HomeView',
+    name: 'ProjectView',
     components: {
-      DashboardLayout,
-      ListingTable
+      ListingTable,
+      DashboardLayout
     },
     data() {
       return {
-        items: [],
+        projects: [],
         fields: [
           {
             name: 'title',
@@ -32,27 +32,23 @@
             items: [ 'title', 'thumbnail' ]
           },
           {
-            name: 'tags',
-            type: 'Array',
+            name: 'status',
+            type: 'String',
           },
           {
             name: 'description',
             type: 'textArea',
           },
           {
-            name: 'category',
-            type: 'String',
-          },
-          {
-            name: 'date',
-            type: 'dateArray',
+            name: 'tags',
+            type: 'Array',
           },
         ]
       }
     },
     async mounted() {
-      let response = await getActivity()
-      this.items = response.activities
+      let response = await getProjects()
+      this.projects = response.projects
     },
   }
 </script>

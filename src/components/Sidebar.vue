@@ -16,10 +16,10 @@
                                 <svg aria-hidden="true" :class="{'rotate-180': item.open}" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
 
-                            <ul class="py-2" v-if="item.open">
+                            <ul v-if="item.open" class="space-y-1 my-2">
                                 <template v-for="child in item.children">
                                     <li>
-                                        <a :href="child.link" class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-500 rounded group hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                                        <a :href="child.link" class="flex items-center px-2 py-1.5 pl-11 w-full text-base font-medium text-gray-500 rounded group hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700" :class="{'bg-gray-100 dark:bg-gray-700': currentRoute === child.link}">
                                             <span class="flex-1 ml-3 text-left whitespace-nowrap"> {{ child.name }} </span>
                                         </a>
                                     </li>
@@ -196,6 +196,14 @@
 
         mounted() {
             this.currentRoute = window.location.pathname;
+
+            if (this.currentRoute === '/nanodegree' || this.currentRoute === '/projects' || this.currentRoute === '/blogs' || this.currentRoute === '/inora') {
+                this.navItems[4].open = true;
+            }
+
+            if (this.currentRoute === '/socials' || this.currentRoute === '/teams' || this.currentRoute === '/news' || this.currentRoute === '/reports' || this.currentRoute === '/testimonials' || this.currentRoute === '/stories') {
+                this.navItems[3].open = true;
+            }
         },
 
     };
