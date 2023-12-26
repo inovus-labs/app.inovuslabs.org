@@ -3,7 +3,7 @@
     
     
     <section class="h-full bg-gray-50 dark:bg-gray-900 p-3 sm:p-6">
-        <div class="mx-auto px-4">
+        <div class="mx-auto">
 
 
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded overflow-hidden">
@@ -33,7 +33,7 @@
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                         <button type="button"
                             class="flex items-center justify-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                            + Add New Event
+                            + {{ addNewBtnText }}
                         </button>
                         <div class="flex items-center space-x-3 w-full md:w-auto">
                             
@@ -377,6 +377,10 @@
             },
             fields: {
                 type: Array,
+                required: true
+            },
+            addNewBtnText: {
+                type: String,
                 required: true
             }
         },
