@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import EventsView from '@/views/EventsView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
+import ResourcesView from '@/views/ResourcesView.vue'
 
 import NotFoundView from '@/views/404.vue'
 
@@ -32,6 +33,14 @@ const router = createRouter({
       component: ProjectsView,
       meta: {
         title: 'Events',
+      },
+    },
+    {
+      path: '/resources',
+      name: 'resources',
+      component: ResourcesView,
+      meta: {
+        title: 'Resources',
       },
     },
 

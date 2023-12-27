@@ -179,8 +179,8 @@
                                         <template v-if="field.type === 'StringImg'">
                                             <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <div class="flex items-center">
-                                                    <img :src="item[field.items[1]]" :alt="item[field.items[0]]" class="w-auto h-12 mr-4 rounded max-w-14">
-                                                    <span>{{ item[field.items[0]] }}</span>
+                                                    <img v-if="field.items[1]" :src="item[field.items[1]]" :alt="item[field.items[0]]" class="w-auto h-12 mr-4 rounded max-w-14">
+                                                    <span class="heading-ellipsis max-w-80">{{ item[field.items[0]] }}</span>
                                                 </div>
                                             </td>
                                         </template>
@@ -192,6 +192,19 @@
                                                     <template v-for="tag in item[field.name]" :key="tag">
                                                         <span class="bg-blue-200 text-blue-900 px-2.5 py-0.5 rounded text-xs font-medium w-max">{{ tag }}</span>
                                                     </template>
+                                                </div>
+                                            </td>
+                                        </template>
+
+
+                                        <template v-if="field.type === 'ButtonsArray'">
+                                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <div class="flex items-center gap-2 align-middle text-align-center">
+                                                    
+                                                    <template v-for="button in item[field.name]" :key="button">
+                                                        <a :href="button.url" target="_blank" class="bg-primary text-white px-3 py-1 rounded text-xs font-medium w-max">{{ button.type }}</a>
+                                                    </template>
+
                                                 </div>
                                             </td>
                                         </template>
@@ -255,6 +268,17 @@
                                                     </template>
                                                 </div>
         
+                                            </td>
+                                        </template>
+
+
+                                        <template v-if="field.type === 'Date'">
+                                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <div class="flex items-center">
+                                                    <span class="bg-green-200 text-green-900 px-2.5 py-0.5 rounded text-xs font-medium w-max">
+                                                        {{ formatDate(item[field.name], true) }}
+                                                    </span>
+                                                </div>
                                             </td>
                                         </template>
 
@@ -417,4 +441,10 @@
         -webkit-line-clamp: 3;
         overflow: hidden;
     }
+
+    .heading-ellipsis {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
 </style>
