@@ -328,14 +328,18 @@
                     aria-label="Table navigation">
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                         Showing
-                        <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">{{ meta.from + '-' + meta.to }}</span>
                         of
-                        <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">{{ meta.total }}</span>
                     </span>
                     <ul class="inline-flex items-stretch -space-x-px">
+
+
                         <li>
-                            <a href="#"
-                                class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <div @click="this.paginationFn(meta.page - 1, meta.limit)"
+                                :class="{'opacity-50 pointer-events-none': meta.page === 1}"
+                                class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
+                            >
                                 <span class="sr-only">Previous</span>
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -343,31 +347,27 @@
                                         d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                         clip-rule="evenodd" />
                                 </svg>
-                            </a>
+                            </div>
                         </li>
+
+
+                        <template v-for="page in paginationArray">
+                            <li>
+                                <div @click="this.paginationFn(page, meta.limit)"
+                                    class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
+                                    :class="{'dark:bg-gray-700 dark:text-white': meta.page === page, 'cursor-not-allowed pointer-events-none': page === '...'}"
+                                >
+                                    {{ page }}
+                                </div>
+                            </li>
+                        </template>
+
+
                         <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-current="page"
-                                class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <div @click="this.paginationFn(meta.page + 1, meta.limit)"
+                                :class="{'cursor-not-allowed opacity-50 pointer-events-none': meta.page === meta.pages}"
+                                :disabled="meta.page === meta.pages"
+                                class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer">
                                 <span class="sr-only">Next</span>
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -375,8 +375,10 @@
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd" />
                                 </svg>
-                            </a>
+                            </div>
                         </li>
+
+
                     </ul>
                 </nav>
 
@@ -399,6 +401,10 @@
                 type: Array,
                 required: true
             },
+            meta: {
+                type: Object,
+                required: true
+            },
             fields: {
                 type: Array,
                 required: true
@@ -406,6 +412,16 @@
             addNewBtnText: {
                 type: String,
                 required: true
+            },
+            paginationFn: {
+                type: Function,
+                required: true
+            }
+        },
+
+        data() {
+            return {
+                paginationArray: []
             }
         },
 
@@ -427,6 +443,40 @@
                 } else {
                     return `${day} ${month}`;
                 }
+
+            }
+        },
+
+        computed: {
+            paginationArray() {
+                if(this.meta.pages <= 5) {
+                    return Array.from({length: this.meta.pages}, (_, i) => i + 1);
+                } else {
+                    let arr = [];
+                    arr.push(1);
+                    arr.push(this.meta.page - 1);
+                    arr.push(this.meta.page);
+                    arr.push(this.meta.page + 1);
+                    arr.push(this.meta.pages);
+
+                    arr = arr.filter((item, index) => {
+                        return arr.indexOf(item) === index;
+                    });
+
+                    arr = arr.filter((item) => {
+                        return item > 0 && item <= this.meta.pages;
+                    });
+
+                    // add ... if there is a gap between any two numbers
+                    for(let i = 0; i < arr.length; i++) {
+                        if(arr[i + 1] - arr[i] > 1) {
+                            arr.splice(i + 1, 0, '...');
+                        }
+                    }
+
+                    return arr;
+                }
+
 
             }
         }
