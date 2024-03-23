@@ -3,8 +3,8 @@
       <!-- Side Section -->
       <div class="bg-primary text-white md:w-1/3 md:flex-1 flex items-center justify-center">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Welcome</h2>
-          <p class="text-lg md:text-xl text-center">Login before you go inside!</p>
+          <h2 class="pt-5 text-3xl md:text-4xl font-bold mb-4 text-center">Welcome</h2>
+          <p class="pb-5 text-lg md:text-xl text-center">Login before you go inside!</p>
         </div>
       </div>
   
