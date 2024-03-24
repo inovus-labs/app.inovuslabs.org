@@ -67,9 +67,22 @@ export default {
     }
   },
   async mounted() {
-    await this.getResources(1, 10)
+    await this.getResources(1, 10),
+    this.checkToken();
   },
   methods: {
+    checkToken() {
+        if (localStorage.token) {
+            console.log("true");
+        } else {
+            this.$router.push('/login');
+        }
+    },
+    logout() {
+        localStorage.removeItem('token');
+        // this.$router.go();
+        window.location.reload();
+    },
     async getResources(page, limit) {
       try {
         const res = await getLearningResources(page, limit)

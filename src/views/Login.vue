@@ -91,8 +91,9 @@ export default {
             if (response.status == 200) {
                 localStorage.setItem("token", response.token);
                 sessionStorage.setItem("token", response.token);
+                document.cookie.setItem("token", response.token);
 
-                document.cookie = "token=" + response.token ;
+                document.cookie = "token=" + response.token + ";30d";
 
                 function getCookie(name) {
                     const value = `; ${document.cookie}`;
