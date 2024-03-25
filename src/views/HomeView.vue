@@ -37,6 +37,47 @@
     name: 'HomeView',
     components: {
       DashboardLayout,
-    }
-  }
+    },
+    mounted() {
+    this.checkToken();
+  },
+  methods: {
+    checkToken() {
+      const token = this.getCookie('token');
+      if (token) {
+        // console.log('Token found:', token);
+      } else {
+        console.log('Token not found bye bye');
+        window.location.href = "login";
+      }
+    },
+    getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }}}
+
+
 </script>
+
+
+<!-- check token in cookie -->
+
+<!-- methods: {
+  checkToken() {
+    const token = this.getCookie('token');
+    if (token) {
+      console.log('Token found:', token);
+
+    } else {
+      console.log('Token not found');
+      window.location.href = "login";
+
+    }
+  },
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }}
+  } -->

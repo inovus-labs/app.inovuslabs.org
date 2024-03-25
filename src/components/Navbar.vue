@@ -5,7 +5,7 @@
             <div class="flex justify-start items-center">
 
                 <a href="/" class="flex items-center">
-                    <img src="../../public/assets/logo.svg" class="lg:h-12 h-10 py-0.5" alt="Inovus Labs Logo">
+                    <img src="../../assets/logo.svg" class="lg:h-12 h-10 py-0.5" alt="Inovus Labs Logo">
                 </a>
 
             </div>
