@@ -1,163 +1,144 @@
 <template>
-<div class="h-screen flex flex-col md:flex-row">
-    <!-- Side Section -->
-    <div class="bg-primary text-white md:w-1/3 md:flex-1 flex items-center justify-center">
-        <div>
-            <h2 class="pt-5 text-3xl md:text-4xl font-bold mb-4 text-center">Welcome</h2>
-            <p class="pb-5 text-lg md:text-xl text-center">Login before you go inside!</p>
+    <div class="h-screen flex flex-col md:flex-row">
+        <!-- Side Section -->
+        <div class="bg-primary text-white md:w-1/3 md:flex-1 flex items-center justify-center">
+            <div>
+                <h2 class="pt-5 text-3xl md:text-4xl font-bold mb-4 text-center">Welcome Back!</h2>
+                <p class="pb-5 text-lg md:text-xl text-center">Login to your account to access the dashboard</p>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="mt-10 flex justify-center items-center md:w-1/3 md:flex-1">
+            <div class="w-full max-w-md px-4">
+                <h2 class="text-2xl font-bold mb-6 text-center">Login to your account</h2>
+
+                <div class="border rounded px-6 py-8">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="email">
+                            Email Address
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="email" type="email" placeholder="Enter your email address" v-model="email" required />
+                    </div>
+                    <div class="mb-4 relative">
+                        <label class="block text-gray-700 font-bold mb-2" for="password">
+                            Password
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                            :type="showPassword ? 'text' : 'password'" id="password" placeholder="Enter your password"
+                            v-model="password" required />
+
+                        <button type="button"
+                            class="absolute inset-y-0 right-0 mt-8 mr-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                            @click="showPassword = !showPassword">
+
+                            <template v-if="showPassword">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                </svg>
+                            </template>
+                            <template v-else>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </template>
+                        </button>
+                    </div>
+
+                    <template v-if="error">
+                        <p class="text-center text-red-500 mb-4 text-sm">{{ error }}</p>
+                    </template>
+
+                    <div class="flex items-center justify-between">
+                        <button @click="userLogin"
+                            class="bg-primary hover:bg-primary2 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                            :class="!enableLogin ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'"
+                            type="submit" :disabled="!enableLogin">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-4">
+                        <!-- <a href="#" class="text-primary text-sm">Forgot your password?</a> -->
+                        <a href="/signup" class="text-primary text-sm">Don't have an account? Sign up</a>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Content Section -->
-    <div class="mt-10 flex justify-center items-center md:w-1/3 md:flex-1">
-        <div class="w-full max-w-md px-4">
-            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-            <form @submit.prevent="handleLogin" class="shadow-md rounded px-4 pt-6 pb-8">
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2" for="email">
-                        Email Address
-                    </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Enter your email address" v-model="email" required />
-                </div>
-                <div class="mb-4 relative">
-                    <label class="block text-gray-700 font-bold mb-2" for="password">
-                        Password
-                    </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" :type="showPassword ? 'text' : 'password'" id="password" placeholder="Enter your password" v-model="password" required />
-                    <button type="button" class="absolute inset-y-0 right-0 mt-8 mr-4 text-gray-500 hover:text-gray-700 focus:outline-none" @click="togglePasswordVisibility">
-                        <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path v-if="showPassword" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path v-else d="M13.42 12.943a6.5 6.5 0 111.414-1.414L20 18l-2.362 2.362A10.5 10.5 0 012 12a10.5 10.5 0 0116.162-8.948l1.82-1.82a2 2 0 012.828 2.828l-1.82 1.82A10.5 10.5 0 0122 12a10.5 10.5 0 01-8.58 10.293L13.42 12.943z" />
-                        </svg>
-                    </button>
-                </div>
-                <p v-if="wrongPassword" class="text-center text-red-500 text-sm">The password is wrong</p>
-                <p v-if="HaveID" class="text-center text-red-500 text-sm">There is something wrong in your input!</p>
-                <div class="flex items-center justify-between">
-                    <button @click="userLog" class="bg-primary hover:bg-primary2 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">
-                        Login
-                    </button>
-
-                </div>
-                <button @click="signupPage" class="ml-40 pl-2 pt-2 place-items-center  text-primary text-sm">SignUp</button>
-            </form>
-        </div>
-    </div>
-</div>
 </template>
 
 <script>
-import {
-    userLogin
-} from '@/API/index.js'
-import SignUp from './SignUp.vue';
+    import { userLogin } from '@/API/index.js'
 
-export default {
-    name: 'login',
-    data() {
-        return {
-            email: '',
-            password: '',
-            showPassword: false,
-            HaveID: false,
-            wrongPassword: false,
-        };
-    },
-    methods: {
-        handleLogin() {
-            // Handle login logic here
-            console.log('Email:', this.email);
-            console.log('Password:', this.password);
+    export default {
+        name: 'login',
+        data() {
+            return {
+                email: null,
+                password: null,
+                enableLogin: false,
+                showPassword: false,
+                error: null,
+            };
         },
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-            const passwordInput = document.getElementById('password');
-            passwordInput.type = this.showPassword ? 'text' : 'password';
-        },
-        signupPage() {
-            this.$router.push({
-                path: '/signup'
-            });
-        },
-        async userLog() {
-            let user = {
-                "email": this.email,
-                "password": this.password,
+        mounted() {
+            if (document.cookie.includes('token')) {
+                this.$router.push('/');
             }
-
-            let response = await userLogin(user);
-            console.log(response);
-            
-
-            if (response.status == 200) {
-                // localStorage.setItem("token", response.token);
-                // sessionStorage.setItem("token", response.token);
-                // document.cookie.setItem("token", response.token);
-
-                // document.cookie = "token=" + response.token ;
-
-                // function getCookie(name) {
-                //     const value = `; ${document.cookie}`;
-                //     console.log(value);
-                //     const parts = value.split(`; ${name}=`);
-                //     if (parts.length === 2) return parts.pop().split(';').shift();
-                // }
-
-                // const token = getCookie('token');
-                // console.log(token); // This will log the value of the token cookie
-
-                // Set the cookie
-                document.cookie = "token=" + response.token;
-
-                // Function to get the cookie value by name
-                function getCookie(name) {
-                    const value = `; ${document.cookie}`;
-                    const parts = value.split(`; ${name}=`);
-                    if (parts.length === 2) return parts.pop().split(';').shift();
+        },
+        methods: {
+            async userLogin() {
+                await userLogin({
+                    email: this.email,
+                    password: this.password,
+                }).then((response) => {
+                    if (response.status === 200) {
+                        document.cookie = `token=${response.token}; max-age=864000`;
+                        this.$router.push('/');
+                    } else {
+                        this.error = response.error;
+                    }
+                }).catch((error) => {
+                    this.error = error;
+                });
+            },
+        },
+        watch: {
+            email: function () {
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if (emailRegex.test(this.email) && this.password) {
+                    this.enableLogin = true;
+                } else {
+                    this.enableLogin = false;
                 }
-
-                // Retrieve the token from the cookie
-                const token = getCookie('token');
-
-                // Log the token to the console
-                console.log(token);
-
-                window.location.href = "/";
-            } else if (response.response.status === 401) {
-                this.wrongPassword = true;
-                console.log("401 - wrong pass");
-            } else {
-                console.log("error");
-                this.HaveID = true;
-            }
+            },
+            password: function () {
+                if (this.email && this.password) {
+                    this.enableLogin = true;
+                } else {
+                    this.enableLogin = false;
+                }
+            },
         },
-    }
-};
+    };
 </script>
 
 <style scoped>
-@media (max-width: 768px) {
-    .flex-col {
-        flex-direction: column;
-        padding-top: 200px;
+    @media (max-width: 768px) {
+        .flex-col {
+            flex-direction: column;
+            padding-top: 200px;
+        }
     }
-}
 </style>
-
-  <!-- async handleSignUp() {
-
-    if (!this.passwordError && !this.passwordMismatch && !this.mobileError && !this.passwordLength) {
-        await this.userReg()
-        console.log(this.formData);
-    }
-},
-
-async userReg() {
-    let user = {
-        "email": this.email,
-        "password": this.password,
-    }
-
-    let response = await userRegister(user);
-    console.log(response);
-}, -->

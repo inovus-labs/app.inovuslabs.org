@@ -1,4 +1,3 @@
-
 <template>
   <DashboardLayout>
 
@@ -10,7 +9,7 @@
     </div>
 
     <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-    
+
     <div class="grid grid-cols-2 gap-4 mb-4">
       <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
       <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
@@ -19,7 +18,7 @@
     </div>
 
     <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-    
+
     <div class="grid grid-cols-2 gap-4">
       <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
       <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
@@ -31,53 +30,19 @@
 </template>
 
 <script>
-  import DashboardLayout from '@/layouts/DashboardLayout.vue'
+import DashboardLayout from '@/layouts/DashboardLayout.vue'
 
-  export default {
-    name: 'HomeView',
-    components: {
-      DashboardLayout,
-    },
-    mounted() {
-    this.checkToken();
+export default {
+  name: 'HomeView',
+  components: {
+    DashboardLayout,
   },
-  methods: {
-    checkToken() {
-      const token = this.getCookie('token');
-      if (token) {
-        // console.log('Token found:', token);
-      } else {
-        console.log('Token not found bye bye');
-        window.location.href = "login";
-      }
-    },
-    getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }}}
+  mounted() {
+    if (!document.cookie.includes('token')) {
+      this.$router.push('/login')
+    }
+  },
+}
 
 
 </script>
-
-
-<!-- check token in cookie -->
-
-<!-- methods: {
-  checkToken() {
-    const token = this.getCookie('token');
-    if (token) {
-      console.log('Token found:', token);
-
-    } else {
-      console.log('Token not found');
-      window.location.href = "login";
-
-    }
-  },
-  getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }}
-  } -->

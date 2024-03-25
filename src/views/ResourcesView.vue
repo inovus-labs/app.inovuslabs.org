@@ -1,4 +1,3 @@
-
 <template>
   <DashboardLayout>
 
@@ -12,14 +11,8 @@
     </section>
 
 
-      <ListingTable 
-        v-if="items && meta"
-        :paginationFn="getResources"
-        :items="items" 
-        :meta="meta"
-        :fields="fields" 
-        :addNewBtnText="'Add New Resource'" 
-      />
+    <ListingTable v-if="items && meta" :paginationFn="getResources" :items="items" :meta="meta" :fields="fields"
+      :addNewBtnText="'Add New Resource'" />
 
 
   </DashboardLayout>
@@ -67,30 +60,12 @@ export default {
     }
   },
   async mounted() {
-    await this.getResources(1, 10),
-    this.checkToken();
+    if (!document.cookie.includes('token')) {
+      this.$router.push('/login')
+    }
+    await this.getResources(1, 10)
   },
   methods: {
-    checkToken() {
-    const token = this.getCookie('token');
-    if (token) {
-      // console.log('Token found:', token);
-
-    } else {
-      console.log('Token not found bye bye');
-      window.location.href = "login";
-    }
-    },
-    getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  },
-    logout() {
-        localStorage.removeItem('token');
-        // this.$router.go();
-        window.location.reload();
-    },
     async getResources(page, limit) {
       try {
         const res = await getLearningResources(page, limit)
@@ -108,7 +83,7 @@ export default {
         console.log(err)
       }
     },
-    
+
     // get from and to from page and limit
     getFromTo(page, limit) {
       const from = (page - 1) * limit + 1
