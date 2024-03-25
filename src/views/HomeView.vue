@@ -37,6 +37,24 @@
     name: 'HomeView',
     components: {
       DashboardLayout,
+    },
+    mounted() {
+    this.checkToken();
+  },
+methods: {
+    checkToken() {
+        if (localStorage.token) {
+            console.log("true");
+        } else {
+            this.$router.push('/login');
+        }
+    },
+    logout() {
+        localStorage.removeItem('token');
+        // this.$router.go();
     }
   }
+}
+
+
 </script>

@@ -4,6 +4,8 @@ import HomeView from '@/views/HomeView.vue'
 import EventsView from '@/views/EventsView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 import ResourcesView from '@/views/ResourcesView.vue'
+import login from '@/views/Login.vue'
+import signup from '@/views/SignUp.vue'
 
 import NotFoundView from '@/views/404.vue'
 
@@ -49,6 +51,20 @@ const router = createRouter({
       name: '404',
       component: NotFoundView,
       meta: { title: '404' }
+    },{
+      path: '/login',
+      name: 'login',
+      component: login,
+      meta: {
+        title: 'login',
+      },
+    },{
+      path: '/signup',
+      name: 'signup',
+      component: signup,
+      meta: {
+        title: 'signup',
+      },
     },
 
   ]
