@@ -60,7 +60,7 @@ export default {
             password: '',
             showPassword: false,
             HaveID: false,
-            wrongPassword: false
+            wrongPassword: false,
         };
     },
     methods: {
@@ -87,27 +87,46 @@ export default {
 
             let response = await userLogin(user);
             console.log(response);
+            
 
             if (response.status == 200) {
-                localStorage.setItem("token", response.token);
-                sessionStorage.setItem("token", response.token);
-                document.cookie.setItem("token", response.token);
+                // localStorage.setItem("token", response.token);
+                // sessionStorage.setItem("token", response.token);
+                // document.cookie.setItem("token", response.token);
 
-                document.cookie = "token=" + response.token + ";30d";
+                // document.cookie = "token=" + response.token ;
 
+                // function getCookie(name) {
+                //     const value = `; ${document.cookie}`;
+                //     console.log(value);
+                //     const parts = value.split(`; ${name}=`);
+                //     if (parts.length === 2) return parts.pop().split(';').shift();
+                // }
+
+                // const token = getCookie('token');
+                // console.log(token); // This will log the value of the token cookie
+
+                // Set the cookie
+                document.cookie = "token=" + response.token;
+
+                // Function to get the cookie value by name
                 function getCookie(name) {
                     const value = `; ${document.cookie}`;
                     const parts = value.split(`; ${name}=`);
                     if (parts.length === 2) return parts.pop().split(';').shift();
                 }
 
+                // Retrieve the token from the cookie
                 const token = getCookie('token');
-                console.log(token); // This will log the value of the token cookie
+
+                // Log the token to the console
+                console.log(token);
 
                 window.location.href = "/";
-            } else if(response.status == 401){
-                let wrongPassword = true;
-            }else {
+            } else if (response.response.status === 401) {
+                this.wrongPassword = true;
+                console.log("401 - wrong pass");
+            } else {
                 console.log("error");
                 this.HaveID = true;
             }
