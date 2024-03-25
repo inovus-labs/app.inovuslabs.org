@@ -67,9 +67,30 @@ export default {
     }
   },
   async mounted() {
-    await this.getResources(1, 10)
+    await this.getResources(1, 10),
+    this.checkToken();
   },
   methods: {
+    checkToken() {
+    const token = this.getCookie('token');
+    if (token) {
+      // console.log('Token found:', token);
+
+    } else {
+      console.log('Token not found bye bye');
+      window.location.href = "login";
+    }
+    },
+    getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  },
+    logout() {
+        localStorage.removeItem('token');
+        // this.$router.go();
+        window.location.reload();
+    },
     async getResources(page, limit) {
       try {
         const res = await getLearningResources(page, limit)

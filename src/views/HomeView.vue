@@ -41,20 +41,43 @@
     mounted() {
     this.checkToken();
   },
-methods: {
+  methods: {
     checkToken() {
-        if (localStorage.token) {
-            console.log("true");
-        } else {
-            this.$router.push('/login');
-        }
+      const token = this.getCookie('token');
+      if (token) {
+        // console.log('Token found:', token);
+      } else {
+        console.log('Token not found bye bye');
+        window.location.href = "login";
+      }
     },
-    logout() {
-        localStorage.removeItem('token');
-        // this.$router.go();
-    }
-  }
-}
+    getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }}}
 
 
 </script>
+
+
+<!-- check token in cookie -->
+
+<!-- methods: {
+  checkToken() {
+    const token = this.getCookie('token');
+    if (token) {
+      console.log('Token found:', token);
+
+    } else {
+      console.log('Token not found');
+      window.location.href = "login";
+
+    }
+  },
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }}
+  } -->
